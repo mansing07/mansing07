@@ -1,0 +1,48 @@
+Here's a simple digital clock program in C:
+
+```
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+    time_t rawtime;
+    struct tm *timeinfo;
+
+    while (1) {
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+
+        printf("\r%02d:%02d:%02d", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+        fflush(stdout);
+
+        sleep(1); // wait for 1 second
+    }
+
+    return 0;
+}
+```
+
+Let's break down this program:
+
+# Header Files
+- `stdio.h`: for input/output operations (e.g., `printf`)
+- `time.h`: for time-related functions (e.g., `time`, `localtime`)
+
+# Main Function
+1. `time_t rawtime;`: declares a variable to store the raw time
+2. `struct tm *timeinfo;`: declares a pointer to a `struct tm` to store the broken-down time
+
+# Time-Related Functions
+1. `time(&rawtime);`: gets the current time and stores it in `rawtime`
+2. `timeinfo = localtime(&rawtime);`: converts the raw time to a broken-down time (hour, minute, second, etc.) and stores it in `timeinfo`
+
+# Printing the Time
+1. `printf("\r%02d:%02d:%02d", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);`: prints the time in the format `HH:MM:SS`
+    - `\r` returns the cursor to the beginning of the line, so the next time is printed over the previous one
+    - `%02d` formats the hour, minute, and second as two-digit numbers with leading zeros if necessary
+2. `fflush(stdout);`: ensures that the output is displayed immediately
+
+# Waiting for 1 Second
+1. `sleep(1);`: waits for 1 second before updating the time again
+
+This program will continue to update and print the time until it is manually stopped.
